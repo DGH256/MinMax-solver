@@ -1,6 +1,10 @@
 Am creeat un program in C# winforms ce rezolva un arbore folosing metoda min-max alfa-beta :D
 Puteti incerca sa rulati fisierul .exe din folderul 'Executable file' pentru a vedea cum functioneaza ( sau doar sa verificati codul sursa daca, evident,este riscant sa porniti un fisier .exe" )
 
+![Screenshot_5735](https://user-images.githubusercontent.com/91731551/138122747-1bd4a734-b588-4579-ae0f-b386457d1b9b.png)
+
+![Screenshot_5734](https://user-images.githubusercontent.com/91731551/138122727-55b8c8e7-05c8-4545-a904-1fe5b420813a.png)
+
 Pentru exercitiul de la tema, unde arborele este "Q=1;R=10;K=3;L=0;N=7;O=2;P=20;E=2;H=2;I=1;M - Q,R; F - K,L; G - M,N; J - O,P; B - E,F; C - G,H; D - I,J; A - B,C,D; root-A",
 programul afiseaza :
 
