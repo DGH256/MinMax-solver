@@ -1,7 +1,7 @@
 <h4>
 <ul>
 <li>
-Am creeat un program in C# winforms ce rezolva un arbore folosing metoda min-max alfa-beta :D
+Am creeat un program in C# winforms ce rezolva un arbore folosind metoda min-max alfa-beta :D
 </li>
  <li>
 Puteti incerca sa rulati fisierul .exe din folderul 'Executable file' pentru a vedea cum functioneaza ( sau doar sa verificati codul sursa daca, evident,este riscant sa porniti un fisier .exe" )  
@@ -14,7 +14,6 @@ Puteti incerca sa rulati fisierul .exe din folderul 'Executable file' pentru a v
 
 ![Screenshot_5729](https://user-images.githubusercontent.com/91731551/138127988-4dabd79a-bc7d-4d99-b306-2fe452b91db8.png)
 
-<br/>
 <h3> Pentru exercitiul de la tema, programul afiseaza : </h3> <br/><br/>
 
 *************************************************************************
