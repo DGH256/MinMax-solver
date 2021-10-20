@@ -11,6 +11,9 @@ Puteti incerca sa rulati fisierul .exe din folderul 'Executable file' pentru a v
 ![Screenshot_5735](https://user-images.githubusercontent.com/91731551/138122747-1bd4a734-b588-4579-ae0f-b386457d1b9b.png)
 
 ![Screenshot_5734](https://user-images.githubusercontent.com/91731551/138122727-55b8c8e7-05c8-4545-a904-1fe5b420813a.png)
+
+![Screenshot_5729](https://user-images.githubusercontent.com/91731551/138127988-4dabd79a-bc7d-4d99-b306-2fe452b91db8.png)
+
 <br/>
 <h3> Pentru exercitiul de la tema, programul afiseaza : </h3> <br/><br/>
 
