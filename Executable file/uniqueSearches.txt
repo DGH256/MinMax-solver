@@ -1,0 +1,17 @@
+l1=2;l2=3;l3=3;l4=4;b-l1,l2;c-l3,l4;a-b,c; root-a
+F - K,L; G - M,N; J - O,P; B - E,F; C - G,H; D - I,J; A - B,C,D; root-A
+H=3;I=5;J=6;K=9;L=1;M=2;N=0;O=0; D-H,I; E-J,K; F-L,M; G-N,O; B-D,E; C-F,G; A-B,C; root-A
+Q=1;R=-10;K=3;L=0;N=7;O=2;P=-20;E=2;H=2;I=1;M - Q,R; F - K,L; G - M,N; J - O,P; B - E,F; C - G,H; D - I,J; A - B,C,D; root-A
+l1=5;l2=6;l3=8;l4=9;l5=10;l6=-18;l7=10;l8=20;l9=6;l10=6;l11=9;l12=5;l13=9;l14=-1;l15=6;
+A-B,C,D;B-E,F;C-G,H;D-I,J;E-K;F-L,M,N;G-O;H-P;I-Q;J-R,S;K-l1,l2;L-l3,l4,l5;M-l6;N-l7,l8;O-l9;P-l10,l11;Q-l12;R-l13,l14;S-l15; root-A
+Q=1;R=10;K=3;L=0;N=7;O=2;P=20;E=2;H=2;I=1;M - Q,R; F - K,L; G - M,N; J - O,P; B - E,F; C - G,H; D - I,J; A - B,C,D; root-A
+l1=5;l2=6;l3=8;l4=9;l5=10;l6=-18;l7=10;l8=20;l9=6;l10=6;l11=9;l12=5;l13=9;l14=-1;l15=6;startAlpha=-5;startBeta=12;
+l1=5;l2=6;l3=8;l4=9;l5=10;l6=-18;l7=10;l8=20;l9=6;l10=6;l11=9;l12=5;l13=9;l14=-1;l15=6;startAlpha=-5;startBeta=12;root-A;
+5; root-A
+l1=5;l2=6;l3=8;l4=9;l5=10;l6=-18;l7=10;l8=20;l9=6;l10=6;l11=9;l12=5;l13=9;l14=-1;l15=6;startAlpha=-5;startBeta=12;A-B,C,D;B-E,F;C-G,H;D-I,J;E-K;F-L,M,N;G-O;H-P;I-Q;J-R,S;K-l1,l2;L-l3,l4,l5;M-l6;N-l7,l8;O-l9;P-l10,l11;Q-l12;R-l13,l14;S-l15; root-A
+L=4;M=8;N=9;O=3;P=2;Q=-2;R=9;S=-1;T=8;U=4;V=3;W=6;X=5;Y=7;Z=1;E-L,M;F-N,O;G-P,Q;H-R,S;I-T,U;J-V,W,X;K-Y,Z;B-E,F;C-G,H,I;D-J,K;A-B,C,D;root-A
+L=4;M=3;N=6;O=2;P=2;Q=1;R=9;S=5;T=3;U=1;V=5;X=4;Y=7;Z=5;E-L,M;F-N,O;G=P,Q;H-R,S;I-T,U;J-V,X;K-Y,Z;B-E,F;C-G,H,I;D-J,K;A-B,C,D;root-A
+L=4;M=3;N=6;O=2;P=2;Q=1;R=9;S=5;T=3;U=1;V=5;X=4;Y=7;Z=5;E-L,M;F-N,O;G-P,Q;H-R,S;I-T,U;J-V,X;K-Y,Z;B-E,F;C-G,H,I;D-J,K;A-B,C,D;root-A
+L=4;M=3;N=6;O=2;P=2;Q=1;R=9;S=5;T=3;U=1;V=5;X=4;Y=7;Z=5;E-L,M;F-N,O;G-P,Q;H-R,S;I-T,U;J-V,X;K-Y,Z;B-E,F;C-G,H,I;D-J,K;A-B,C,D;root-A
+L=4;M=3;N=6;O=2;P=2;Q=1;R=9;S=5;T=3;U=1;V=5;X=4;Y=7;Z=5;E-L,M;F-N,O;G-P,Q;H-R,S;I-T,U;J=V,X;K-Y,Z;B-E,F;C-G,H,I;D-J,K;A-B,C,D;root-A
+L=4;M=3;N=6;O=2;P=2;Q=1;R=9;S=5;T=3;U=1;V=5;X=4;Y=7;Z=5;E-L,M;F-N,O;G-P,Q;H-R,S;I-T,U;J-V,X;K-Y,Z;B-E,F;C-G,H,I;D-J,K;A-B,C,D;root-A

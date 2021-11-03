@@ -12,6 +12,8 @@ namespace WindowsFormsApplication1
 
         public static int infinit = 9888888;
 
+
+
         public int cost = unknownCost;
         public string name { get; set; }
 
@@ -38,6 +40,11 @@ namespace WindowsFormsApplication1
         {
             nod.parent = this;
             this.children.Add(nod);
+        }
+
+        public bool isLeafNode()
+        {
+            return this.children.Count == 0;
         }
     }
 }

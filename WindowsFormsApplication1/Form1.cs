@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,9 +14,53 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
+        HashSet<string> uniqueSearches = new HashSet<string>();
+
+        private string savePath = Directory.GetCurrentDirectory() + "\\uniqueSearches.txt";
+
+        private void loadSearches()
+        {
+            using (StreamReader reader = new StreamReader(File.OpenRead(savePath)))
+            {
+                while(!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    uniqueSearches.Add(line);
+                }
+            }
+        }
+
+        private void saveSearches()
+        {
+            using (StreamWriter writer = new StreamWriter(File.OpenWrite(savePath)))
+            {
+                foreach(string item in uniqueSearches)
+                {
+                    var item_singleLine = Regex.Replace(item, @"\t|\n|\r", "");
+                    item_singleLine = item_singleLine.Replace(Environment.NewLine, "");
+                    writer.WriteLine(item_singleLine);
+                }
+            }
+        }
+
+        private string getAllUniqueSearches()
+        {
+            string result = "";
+
+            foreach (string item in uniqueSearches)
+            {
+                result += item + Environment.NewLine+ Environment.NewLine; 
+            }
+
+            return result;
+        }
+
+
         public Form1()
         {
             InitializeComponent();
+
+            loadSearches();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,27 +95,49 @@ namespace WindowsFormsApplication1
             string nodeName = "";
             int nodeCost = -1;
 
+            int startAlpha = Node_MinMax.infinit, startBeta = Node_MinMax.infinit;
+
             string rootNode = "A"; //default value
 
             try
             {
                 //Creating the nodes here
                 foreach (var token in tokens)
-                {
                     if (token.Contains('='))
                     {
+
                         var subtokens = token.Split('=');
 
                         nodeName = subtokens[0].Trim();
+                        try
+                        {
+                            nodeCost = Convert.ToInt32(subtokens[1].Trim());
+                        }
+                        catch (Exception ex)
+                        {
+                            logInfo(0, "**************************************");
+                            logInfo(0, string.Format("Exception caught during node assignment, for token: {0}. Exception message: {1}", token, ex.Message));
+                            logInfo(0, "**************************************");
+                        }
 
-                        nodeCost = Convert.ToInt32(subtokens[1].Trim());
+                        if (nodeName.ToLower().Contains("startalpha"))
+                        {
+                            startAlpha = nodeCost;
+                        }
+                        else
+                                if (nodeName.ToLower().Contains("startbeta"))
+                        {
+                            startBeta = nodeCost;
+                        }
+                        else
+                        {
+                            Node_MinMax nod_nou = new Node_MinMax(nodeCost, nodeName);
 
-                        Node_MinMax nod_nou = new Node_MinMax(nodeCost, nodeName);
-
-                        allNodes.Add(nod_nou.name, nod_nou);
+                            allNodes.Add(nod_nou.name, nod_nou);
+                        }
 
                     }
-                }
+
 
                 //Creating the node relations here
                 foreach (var token in tokens)
@@ -127,7 +195,23 @@ namespace WindowsFormsApplication1
                 MessageBox.Show(displayMessage);
             }
 
+            if(!uniqueSearches.Contains(instructionString))
+            {
+                uniqueSearches.Add(instructionString);
+                saveSearches();
+            }
+
             var root = allNodes[rootNode];
+
+            if(startAlpha!=Node_MinMax.infinit)
+            {
+                root.alpha = startAlpha;
+            }
+
+            if(startBeta!=Node_MinMax.infinit)
+            {
+                root.beta = startBeta;
+            }
 
             minmax(root, true, 0);
 
@@ -135,7 +219,14 @@ namespace WindowsFormsApplication1
 
             logInfo(0, "Final values of all nodes :");
 
-            print_final_values(root, true);
+            Dictionary<string, string> outputDict = new Dictionary<string, string>();
+
+            print_final_values(root, true, outputDict);
+
+            foreach(var line in outputDict.OrderBy(p=>p.Key))
+            {
+                logInfo(0, line.Value);
+            }
 
         }
 
@@ -173,7 +264,7 @@ namespace WindowsFormsApplication1
             return rezultat;
         }
 
-        void print_final_values(Node_MinMax nod, bool isMaxLevel)
+        void print_final_values(Node_MinMax nod, bool isMaxLevel, Dictionary<string,string> outputDict=null)
         {
             string level = "MAX";
 
@@ -195,8 +286,6 @@ namespace WindowsFormsApplication1
                     valoare = Node_MinMax.unknownCost;
                 }
 
-                logInfo(0,string.Format("{0}={1} (Alpha={2},Beta={3},Cost={4},Level={5})", nod.name, valoare, nod.alpha, nod.beta, nod.cost, level));
-
             }
             else
             {
@@ -216,13 +305,48 @@ namespace WindowsFormsApplication1
                     valoare = Node_MinMax.unknownCost;
                 }
 
-                logInfo(0, string.Format("{0}={1} (Alpha={2},Beta={3},Cost={4},Level={5})", nod.name, valoare, nod.alpha, nod.beta,nod.cost, level));
+                //logInfo(0, string.Format("{0}={1} (Alpha={2},Beta={3},Cost={4},Level={5})", nod.name, valoare, nod.alpha, nod.beta,nod.cost, level));
 
             }
 
-            foreach(var childnode in nod.children)
+            if (outputDict == null)
             {
-                print_final_values(childnode, !isMaxLevel);
+                logInfo(0, string.Format("{0}={1} (Alpha={2},Beta={3},Cost={4},Level={5})", nod.name, valoare, nod.alpha, nod.beta, nod.cost, level));
+            }
+            else
+            {
+                outputDict.Add(nod.name, string.Format("{0}={1} (Alpha={2},Beta={3},Cost={4},Level={5})", nod.name, valoare, nod.alpha, nod.beta, nod.cost, level));
+            }
+
+            foreach (var childnode in nod.children)
+            {
+                print_final_values(childnode, !isMaxLevel, outputDict);
+            }
+        }
+
+        public void try_propagating_ABValues(Node_MinMax parent, Node_MinMax child, int recursionLevel = 0)
+        {
+
+            if (child.isLeafNode()) { return; }
+
+            int oldAlpha = child.alpha, oldBeta = child.beta;
+
+            bool madeChanges = false;
+
+            if(child.alpha==-Node_MinMax.infinit && parent.alpha!=-Node_MinMax.infinit)
+            {
+                child.alpha = parent.alpha;
+                madeChanges = true;
+            }
+
+            if(child.beta == Node_MinMax.infinit && parent.beta != Node_MinMax.infinit)
+            {
+                child.beta = parent.beta;
+                madeChanges = true;
+            }
+            if(madeChanges)
+            {
+                logInfo(recursionLevel, string.Format("Changed child node {0}  [{1},{2}] -> [{3},{4}] [alpha,beta] values", child.name, oldAlpha, oldBeta, child.alpha, child.beta));
             }
         }
 
@@ -249,6 +373,8 @@ namespace WindowsFormsApplication1
 
                     foreach (var child in nod.children)
                     {
+                        try_propagating_ABValues(nod,child,recursionLevel);
+
                         int valoare = minmax(child, !isMaxLevel, recursionLevel+1);
 
                         valori.Add(child.name+"="+valoare);
@@ -302,6 +428,8 @@ namespace WindowsFormsApplication1
 
                     foreach (var child in nod.children)
                     {
+                        try_propagating_ABValues(nod, child, recursionLevel);
+
                         int valoare = minmax(child, !isMaxLevel,recursionLevel+1);
 
                         valori.Add(child.name + "=" + valoare);
@@ -318,7 +446,7 @@ namespace WindowsFormsApplication1
                                 logInfo(recursionLevel, string.Format("Pruned node {0} because Beta={1} <= Alpha={2}", nod.children[contor_index].name, nod.beta, nod.alpha));
                             }
 
-                            break;
+                            break; 
                         }
 
                         //Not sure about this part
@@ -369,6 +497,12 @@ namespace WindowsFormsApplication1
             logInfo(0, "You can also decide which node should be the root, try typing root-A or root-B at the end");
 
             logInfo(0, "Try out this input string :  E=7; F=5; G=3; A-B,C,D; B-E,F; C-G; root-A");
+
+            logInfo(0,"Unique searches so far :");
+
+            var allSearches = getAllUniqueSearches();
+
+            logInfo(0,allSearches);
 
         }
     }
